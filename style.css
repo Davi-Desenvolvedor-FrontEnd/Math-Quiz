@@ -1,175 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Rubik+Iso&display=swap');
 /* Estilo geral */
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 body {
-    background-color: #121214;
-    color: #fff;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, Helvetica, sans-serif;
+  background-color: #121214;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .container {
-    background-color: #121214;
-    width: 50%;
-    max-width: 800px;
-    border: 1px solid #6969692f;
-    border-radius: 5px;
-    padding: 16px;
-    box-shadow: 0 0 2px 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column wrap;
+  background-color: #121214;
+  width: 50%;
+  height: 50%;
+  max-width: 800px;
+  border: 1px solid #6969692f;
+  border-radius: 5px;
+  padding: 16px;
+  box-shadow: 0 0 2px 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
 }
 
 .questions-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
 
-    span {
-        color: red;
-    }
+  span {
+    color: red;
+  }
 }
 
 .question {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    word-wrap: break-word;
-    /* Ajuste de largura máxima para grandes perguntas */
-    max-width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  word-wrap: break-word;
+  /* Ajuste de largura máxima para grandes perguntas */
+  max-width: 100%;
 }
 
 .answer-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .next-question {
-    margin-top: 20px;
-    cursor: pointer;
-    padding: 10px;
-    font-size: 1em;
+  margin-top: 20px;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 1em;
 }
-
+.controle-container {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  padding: 50px;
+}
 .quiz-title {
-    color: red;
-    margin-left: 10px;
-    font-size: 1.8em;
+  color: #0077b6;
+  margin-left: 10px;
+  font-size: 3rem;
+  text-align: center;
+  font-family: "Rubik Iso";
 }
-
+.start-quiz {
+  align-self: center;
+  font-family: "Chakra Petch";
+}
 .button {
-    background-color: blue;
-    color: #fff;
-    font-weight: bold;
-    font-size: 16px;
-    border: 0;
-    border-radius: 6px;
-    height: 48px;
-    padding: 0 32px;
-    text-align: center;
-    margin: 15px 30px;
+  background-color: blue;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  border: 0;
+  border-radius: 6px;
+  height: 48px;
+  padding: 0 32px;
+  text-align: center;
+  margin: 15px 30px;
 }
 
 .button:hover {
-    transform: scale(1.1);
-    transition: .3s;
-    box-shadow: 1px 1px 5px rgba(0, 0, 255, 0.587);
+  transform: scale(1.1);
+  transition: 0.3s;
+  box-shadow: 1px 1px 5px rgba(0, 0, 255, 0.587);
 }
 
 .button:not(:disabled):hover {
-    filter: brightness(0.8);
+  filter: brightness(0.8);
 }
 
 .final-message {
-    font-size: 20px;
-    text-align: center;
+  font-size: 20px;
+  text-align: center;
 }
 
 .final-message span {
-    display: block;
-    margin-top: 8px;
+  display: block;
+  margin-top: 8px;
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 
 .feedback {
-    margin: 10px 0;
-    text-align: center;
-    font: bolder 1.5em Arial;
-    color: aqua;
+  margin: 10px 0;
+  text-align: center;
+  font: bolder 1.5em Arial;
+  color: aqua;
 }
 
 .correct {
-    background-color: green;
+  background-color: green;
 }
 
 .incorrect {
-    background-color: red;
+  background-color: red;
 }
 
 .no-change {
-    background-color: blue;
+  background-color: blue;
 }
 
 /* Media Query para telas menores */
 @media (max-width: 600px) {
-    .question {
-        font-size: 18px; /* Diminuir o tamanho do texto da pergunta em telas pequenas */
-    }
+  .question {
+    font-size: 18px; /* Diminuir o tamanho do texto da pergunta em telas pequenas */
+  }
 
-    .answer-container {
-        grid-template-columns: 1fr; /* Respostas ocupam uma coluna em dispositivos pequenos */
-    }
+  .answer-container {
+    grid-template-columns: 1fr; /* Respostas ocupam uma coluna em dispositivos pequenos */
+  }
 
-    .button {
-        font-size: 14px;
-        padding: 0 16px; /* Ajustar os botões para caberem melhor */
-    }
+  .button {
+    font-size: 14px;
+    padding: 0 16px; /* Ajustar os botões para caberem melhor */
+  }
 
-    .container {
-        width: 90%; /* Garantir que o container ocupe a largura total da tela */
-        text-align: center;
-    }
+  .container {
+    width: 90%; /* Garantir que o container ocupe a largura total da tela */
+    text-align: center;
+  }
 }
 
 @media screen and (min-width: 600px) and (max-width: 992px) {
-    .question {
-        font-size: 18px; /* Diminuir o tamanho do texto da pergunta em telas pequenas */
-    }
+  .question {
+    font-size: 18px; /* Diminuir o tamanho do texto da pergunta em telas pequenas */
+  }
 
-    .answer-container {
-        justify-content: space-between;
-        padding: 0 10px;
-    }
+  .answer-container {
+    justify-content: space-between;
+    padding: 0 10px;
+  }
 
-    button.answer {
-        font-size: 14px;
-        padding: 0 16px; /* Ajustar os botões para caberem melhor */
-        width: 60%;
-    }
+  button.answer {
+    font-size: 14px;
+    padding: 0 16px; /* Ajustar os botões para caberem melhor */
+    width: 60%;
+  }
 
-    .container {
-        text-align: center;
-        padding: 30px 0;
-    }
+  .container {
+    text-align: center;
+    padding: 30px 0;
+  }
 }
