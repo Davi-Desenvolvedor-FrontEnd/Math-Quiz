@@ -12,7 +12,12 @@ $nextQuestionButton.addEventListener("click", displayNextQuestion);
 let currentQuestionIndex = 0;
 let totalCorrect = 0;
 
+const $player1= document.querySelector(".Player1")
+const $player2= document.querySelector(".Player2")
+
 function startGame() {
+    $player1.classList.add("hide")
+    $player2.classList.add("hide")
     $startGameButton.classList.add("hide");
     $questionsContainer.classList.remove("hide");
     $quizTitle.classList.add("hide"); // Esconde o título
@@ -115,12 +120,12 @@ function finishGame() {
 
 const questions = [
     {
-        question: "Qual a capital da França?",
+        question: "Diga o resultado da seguinte equação: X² + 4 = 0",
         answers: [
-            { text: "Paris", correct: true },
-            { text: "Brasília", correct: false },
-            { text: "Tóquio", correct: false },
-            { text: "Pequim", correct: false },
+            { text: "2", correct: true },
+            { text: "4", correct: false },
+            { text: "16", correct: false },
+            { text: "1", correct: false },
         ],
     },
     {
@@ -263,24 +268,5 @@ const questions = [
         ]
     },
 
-    {
-        question: "Qual figura histórica descobriu que a Terra é redonda?",
-        answers: [
-            {text: "Nicolau Copérnico" , correct: false},
-            {text: "Galileu Galilei" , correct: false},
-            {text: "Cristóvão Colombo" , correct: false},
-            {text: "Pitágoras" , correct: true},
-        ]
-    },
-
-    {
-        question: "Quem foi o primeiro presidente dos Estados Unidos?",
-        answers: [
-            {text: "Thomas Jefferson" , correct: false},
-            {text: "Abraham Lincoln" , correct: false},
-            {text: "George Washington" , correct: true},
-            {text: "John Adams" , correct: false},
-        ]
-    },
 
 ];
