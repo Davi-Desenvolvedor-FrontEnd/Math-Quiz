@@ -15,7 +15,7 @@ $nextQuestionButton.addEventListener("click", displayNextQuestion);
 
 let currentQuestionIndex = 0;
 let totalCorrect = 0;
-let duracao = 10;
+let duracao = 30;
 let tempo = duracao;
 const $player1 = document.querySelector(".Player1");
 const $player2 = document.querySelector(".Player2");
@@ -25,21 +25,22 @@ function Timer() {
   $barra.style.width = "100%";
   $tempo.textContent = tempo.toFixed(1) + "s";
   if (intervaloTempo) clearInterval(intervaloTempo);
-  intervaloTempo = setInterval(()=>{
-    tempo -= 0.1;
-    $barra.style.width = (tempo/duracao)*100+"%"
-    $tempo.textContent = tempo.toFixed(1)+"s"
-    if (tempo<=0){
-      tempo=0
-      clearInterval(intervaloTempo)
-      $feedback.textContent="Tempo esgotado!"
-      $feedback.classList.remove("hide")
-      document.querySelectorAll(".answer").forEach((btn)=>btn.disabled=true)
-      currentQuestionIndex++
+  intervaloTempo = setInterval(() => {
+    tempo = Math.max(0, +(tempo - 0.1).toFixed(1));
+    $barra.style.width = (tempo / duracao) * 100 + "%";
+    $tempo.textContent = tempo.toFixed(1) + "s";
+    if (tempo <= 0) {
+      clearInterval(intervaloTempo);
+      $feedback.textContent = "Tempo esgotado!";
+      $feedback.classList.remove("hide");
+      document
+        .querySelectorAll(".answer")
+        .forEach((btn) => (btn.disabled = true));
+      currentQuestionIndex++;
       // setTimeout(displayNextQuestion, 300)
-      $nextQuestionButton.classList.remove("hide")
+      $nextQuestionButton.classList.remove("hide");
     }
-  }, 100)
+  }, 100);
 }
 function startGame() {
   $questionsContainer.classList.remove("hide");
@@ -53,7 +54,7 @@ function displayNextQuestion() {
   if (questions.length == currentQuestionIndex) {
     return finishGame();
   }
-  Timer()
+  Timer();
 
   $questionText.textContent = questions[currentQuestionIndex].question;
   $equation.textContent = questions[currentQuestionIndex].equation;
