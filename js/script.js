@@ -6,6 +6,7 @@ const $equation = document.querySelector(".equation");
 const $nextQuestionButton = document.querySelector(".next-question");
 const $quizTitle = document.querySelector(".quiz-title"); // Seleciona o título
 const $feedback = document.querySelector(".feedback"); // Seleciona o feedback
+const $message = document.querySelector(".message"); // Seleciona a mensagem
 const $controleContainer = document.querySelector(".controle-container");
 const $barraContainer = document.querySelector(".barra-container");
 const $barra = document.querySelector(".barra");
@@ -21,6 +22,8 @@ const $player1 = document.querySelector(".Player1");
 const $player2 = document.querySelector(".Player2");
 let intervaloTempo;
 function Timer() {
+  $barraContainer.classList.remove("hide");
+  $message.classList.add("hide");
   tempo = duracao;
   $barra.style.width = "100%";
   $tempo.textContent = tempo.toFixed(1) + "s";
@@ -31,8 +34,9 @@ function Timer() {
     $tempo.textContent = tempo.toFixed(1) + "s";
     if (tempo <= 0) {
       clearInterval(intervaloTempo);
-      $feedback.textContent = "Tempo esgotado!";
-      $feedback.classList.remove("hide");
+      $message.textContent = "Tempo esgotado!";
+      $barraContainer.classList.add("hide");
+      $message.classList.remove("hide");
       document
         .querySelectorAll(".answer")
         .forEach((btn) => (btn.disabled = true));
@@ -156,148 +160,143 @@ const questions = [
     ],
   },
   {
-    question: "Quando o Brasil foi descoberto?",
+    question: "Resolva a equação exponencial:",
+    equation: "2ˣ = 8",
     answers: [
-      { text: "1980", correct: false },
-      { text: "1821", correct: false },
-      { text: "1500", correct: true },
-      { text: "1945", correct: false },
+      { text: "2", correct: false },
+      { text: "3", correct: true },
+      { text: "4", correct: false },
+      { text: "1", correct: false },
     ],
   },
-
   {
-    question: "Quem foi o primeiro presidente do Brasil?",
+    question: "Qual é a derivada de f(x) = 3x² + 2x?",
+    equation: null,
     answers: [
-      { text: "Getulio Vargas", correct: false },
-      { text: "Juscelino Kubitschek", correct: false },
-      { text: "Deodoro da Fonseca", correct: true },
-      { text: "Pedro Alvares Cabral", correct: false },
+      { text: "6x + 2", correct: true },
+      { text: "3x + 2", correct: false },
+      { text: "6x", correct: false },
+      { text: "5x + 2", correct: false },
     ],
   },
-
   {
-    question: "Em que ano ocorreu a Proclamação da República no Brasil?",
+    question: "Resolva a inequação:",
+    equation: "2x - 5 > 3",
     answers: [
-      { text: "1888", correct: false },
-      { text: "1889", correct: true },
-      { text: "1891", correct: false },
-      { text: "1900", correct: false },
+      { text: "x > 4", correct: true },
+      { text: "x < 4", correct: false },
+      { text: "x > 5", correct: false },
+      { text: "x < 5", correct: false },
     ],
   },
-
   {
-    question: "Qual civilização antiga construiu as pirâmides de Gizé?",
+    question: "Qual é o valor de sen(π/2)?",
+    equation: null,
     answers: [
-      { text: "Romanos", correct: false },
-      { text: "Gregos", correct: false },
-      { text: "Mesopotamios", correct: false },
-      { text: "Egicpios", correct: true },
+      { text: "0", correct: false },
+      { text: "1", correct: true },
+      { text: "-1", correct: false },
+      { text: "π/2", correct: false },
     ],
   },
-
   {
-    question: "Qual foi o principal motivo das Cruzadas na Idade Média?",
+    question: "Simplifique a expressão:",
+    equation: "(x² • x³) / x⁴",
     answers: [
-      { text: "Expansão do comércio europeu", correct: false },
-      { text: "Conquista de novas terras na Ásia", correct: false },
-      { text: "Reconquista da Terra Santa (Jerusalém)", correct: true },
-      { text: "Difusão da cultura grega", correct: false },
+      { text: "x", correct: true },
+      { text: "x²", correct: false },
+      { text: "x⁵", correct: false },
+      { text: "1", correct: false },
     ],
   },
-
   {
-    question: "Em que ano a Segunda Guerra Mundial terminou?",
+    question: "Qual é a solução para:",
+    equation: "log₂(8) = ?",
     answers: [
-      { text: "1943", correct: false },
-      { text: "1944", correct: false },
-      { text: "1945", correct: true },
-      { text: "1946", correct: false },
+      { text: "2", correct: false },
+      { text: "3", correct: true },
+      { text: "4", correct: false },
+      { text: "1", correct: false },
     ],
   },
-
   {
-    question: "Quem descobriu o Brasil em 1500?",
+    question: "Resolva o sistema:",
+    equation: "x + y = 10\nx - y = 2",
     answers: [
-      { text: "Cristóvão Colombo", correct: false },
-      { text: "Vasco da Gama", correct: false },
-      { text: "Pedro Álvares Cabral", correct: true },
-      { text: "Fernão de Magalhães", correct: false },
+      { text: "x=6, y=4", correct: true },
+      { text: "x=5, y=5", correct: false },
+      { text: "x=8, y=2", correct: false },
+      { text: "x=7, y=3", correct: false },
     ],
   },
-
   {
-    question:
-      "Qual foi o tratado que dividiu as terras descobertas entre Portugal e Espanha?",
+    question: "Calcule a integral indefinida:",
+    equation: "∫(2x dx)",
     answers: [
-      { text: "Tratado de Versalhes", correct: false },
-      { text: "Tratado de Tordesilhas", correct: true },
-      { text: "Tratado de Madrid", correct: false },
-      { text: "Tratado de Utrecht", correct: false },
+      { text: "x² + C", correct: true },
+      { text: "2x² + C", correct: false },
+      { text: "x²", correct: false },
+      { text: "2x + C", correct: false },
     ],
   },
-
   {
-    question:
-      "Quem foi o líder da Revolução Francesa que instaurou o período conhecido como o Reinado do Terror?",
+    question: "Qual é o valor de:",
+    equation: "cos(60°)",
     answers: [
-      { text: "Napoleão Bonaparte", correct: false },
-      { text: "Luís XVI", correct: false },
-      { text: "Maximilien Robespierre", correct: true },
-      { text: "Jean-Paul Marat", correct: false },
+      { text: "√3/2", correct: false },
+      { text: "1/2", correct: true },
+      { text: "√2/2", correct: false },
+      { text: "0", correct: false },
     ],
   },
-
   {
-    question:
-      "Qual foi o principal evento que desencadeou a Primeira Guerra Mundial?",
+    question: "Fatorize a expressão:",
+    equation: "x² - 9",
     answers: [
-      { text: "A queda da Bolsa de Valores", correct: false },
-      { text: "A invasão da Polônia", correct: false },
-      {
-        text: "O assassinato do arquiduque Francisco Ferdinando",
-        correct: true,
-      },
-      { text: "O ataque a Pearl Harbor", correct: false },
+      { text: "(x-3)(x+3)", correct: true },
+      { text: "(x-9)(x+1)", correct: false },
+      { text: "(x-3)²", correct: false },
+      { text: "(x+3)²", correct: false },
     ],
   },
-
   {
-    question: "A Guerra Fria foi uma disputa entre quais blocos políticos?",
+    question: "Qual é a fórmula de Bhaskara?",
+    equation: null,
     answers: [
-      { text: "Estados Unidos e Alemanha", correct: false },
-      { text: "União Soviética e Japão", correct: false },
-      { text: "Estados Unidos e União Soviética", correct: true },
-      { text: "Reino Unido e China", correct: false },
+      { text: "x = (-b ± √(b² - 4ac))/2a", correct: true },
+      { text: "x = b² - 4ac", correct: false },
+      { text: "x = (-b ± b²)/2a", correct: false },
+      { text: "x = ±√(b² - 4ac)", correct: false },
     ],
   },
-
   {
-    question: "Qual foi o marco inicial da Revolução Industrial?",
+    question: "Resolva a equação logarítmica:",
+    equation: "log₅(25) = ?",
     answers: [
-      { text: "A invenção da máquina a vapor", correct: true },
-      { text: "A descoberta do petróleo", correct: false },
-      { text: "A invenção do motor a combustão", correct: false },
-      { text: "O surgimento das fábricas têxteis", correct: false },
+      { text: "5", correct: false },
+      { text: "2", correct: true },
+      { text: "25", correct: false },
+      { text: "1", correct: false },
     ],
   },
-
   {
-    question: "Qual país foi o berço do Renascimento?",
+    question: "Qual é o domínio da função:",
+    equation: "f(x) = √(x - 4)",
     answers: [
-      { text: "França", correct: false },
-      { text: "Alemanha", correct: false },
-      { text: "Itália", correct: true },
-      { text: "Inglaterra", correct: false },
+      { text: "x ≥ 4", correct: true },
+      { text: "x > 4", correct: false },
+      { text: "x ∈ ℝ", correct: false },
+      { text: "x ≤ 4", correct: false },
     ],
   },
-
   {
-    question: "Qual foi o presidente do Brasil no início da ditadura?",
+    question: "Calcule o limite:",
+    equation: "lim(x→0) (sen(x)/x)",
     answers: [
-      { text: "Juscelino Kubitschek", correct: false },
-      { text: "João Goulart", correct: false },
-      { text: "Castelo Branco", correct: true },
-      { text: "Ernesto Geisel", correct: false },
+      { text: "0", correct: false },
+      { text: "1", correct: true },
+      { text: "∞", correct: false },
+      { text: "Não existe", correct: false },
     ],
   },
 ];
