@@ -16,10 +16,24 @@ $nextQuestionButton.addEventListener("click", displayNextQuestion);
 
 let currentQuestionIndex = 0;
 let totalCorrect = 0;
+let totalCorrect1 = 0;
+let totalCorrect2 = 0;
+let playerindex = 0;
+let contraContra = "";
 let duracao = 30;
 let tempo = duracao;
 const $player1 = document.querySelector(".Player1");
+$player1.addEventListener("click", () => {
+  contraContra = "1 jogador";
+  $player1.style.backgroundColor = "red";
+  $player2.style.backgroundColor = "blue";
+});
 const $player2 = document.querySelector(".Player2");
+$player2.addEventListener("click", () => {
+  $player2.style.backgroundColor = "red";
+  $player1.style.backgroundColor = "blue";
+  contraContra = "2 jogadores";
+});
 let intervaloTempo;
 function Timer() {
   $barraContainer.classList.remove("hide");
@@ -91,16 +105,48 @@ function resetState() {
 function selectAnswer(event) {
   const answerClicked = event.target;
 
-  // Exibe o feedback com base na resposta
-  if (answerClicked.dataset.correct) {
-    document.body.classList.add("correct");
-    $feedback.textContent = "Resposta certa!";
-    totalCorrect++;
-  } else {
-    document.body.classList.add("incorrect");
-    answerClicked.classList.add("incorrect");
-    $feedback.textContent = "Resposta errada!";
+  if (contraContra == "1 jogador") {
+    if (answerClicked.dataset.correct) {
+      document.body.classList.add("correct");
+      $feedback.textContent = "Resposta certa!";
+      totalCorrect++;
+    } else {
+      document.body.classList.add("incorrect");
+      answerClicked.classList.add("incorrect");
+      $feedback.textContent = "Resposta errada!";
+    }
+  } else if (contraContra == "2 jogadores") {
+    if (playerindex == 0) {
+      if (answerClicked.dataset.correct) {
+        document.body.classList.add("correct");
+        $feedback.textContent = "Resposta certa!";
+        totalCorrect1++;
+        playerindex = 1
+        console.log("Pontuação do Jogador 1: "+totalCorrect1);
+      } else {
+        document.body.classList.add("incorrect");
+        answerClicked.classList.add("incorrect");
+        $feedback.textContent = "Resposta errada!";
+        playerindex = 1
+        console.log("Pontuação do Jogador 1: "+totalCorrect1);
+      }
+    } else if (playerindex == 1) {
+      if (answerClicked.dataset.correct) {
+        document.body.classList.add("correct");
+        $feedback.textContent = "Resposta certa!";
+        totalCorrect2++;
+        playerindex = 0
+        console.log("Pontuação do Jogador 2: "+totalCorrect2);
+      } else {
+        document.body.classList.add("incorrect");
+        answerClicked.classList.add("incorrect");
+        $feedback.textContent = "Resposta errada!";
+        playerindex = 0
+        console.log("Pontuação do Jogador 2: "+totalCorrect2);
+      }
+    }
   }
+  // Exibe o feedback com base na resposta
 
   // Mostra o feedback
   $feedback.classList.remove("hide");
