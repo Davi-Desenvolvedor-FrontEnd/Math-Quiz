@@ -271,6 +271,15 @@ body::before {
   font-weight: bold;
   font-size: 16px;
   height: 40px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.Nome:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+  border-color: #1411cb;
+  transform: translateY(-2px);
 }
 
 .Nome::placeholder {
