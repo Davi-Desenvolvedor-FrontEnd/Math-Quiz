@@ -97,7 +97,8 @@ body::before {
   }
 }
 
-.question {
+.question,
+.index {
   font-size: 24px;
   font-weight: bold;
   text-align: center;
@@ -123,8 +124,86 @@ body::before {
   }
 }
 
-.pont-Box {
-  margin: auto;
+.table-responsive {
+  margin: 25px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.384);
+ tr {
+  padding: 10px;
+ }
+  td {
+    font-size: 16px;
+    padding: 0 10px;
+  }
+}
+.table th {
+  background-color: #0096c7;
+  color: white;
+  padding: 12px 15px;
+  text-align: center;
+  font-weight: bold;
+  vertical-align: middle;
+  font-size: 16px;
+}
+.table-hover tbody tr:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+.result {
+  font-weight: bold;
+  text-align: center;
+}
+.winner-row {
+  background-color: #fff9c428 !important;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #fff9c4;
+  }
+  50% {
+    background-color: #ffeb3b;
+  }
+  100% {
+    background-color: #fff9c4;
+  }
+}
+
+.medal {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.gold {
+  color: #ffd700;
+}
+
+.silver {
+  color: #c0c0c0;
+}
+
+.bronze {
+  color: #cd7f32;
+}
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background-color: #f00;
+  opacity: 0.8;
+  border-radius: 0;
+  animation: fall linear forwards;
+  z-index: -1;
+  top: -20px;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 .next-question {
@@ -171,7 +250,8 @@ body::before {
   transition: 0.3s;
   box-shadow: 1px 1px 5px rgba(0, 0, 255, 0.587);
 }
-.Player1, .Player2 {
+.Player1,
+.Player2 {
   align-items: center;
   height: 50px;
 }
@@ -182,16 +262,26 @@ body::before {
   flex-direction: column;
 }
 .Nome {
-border-radius: 5px;
-border-style: ridge;
-padding: 5px;
-text-decoration: none;
+  border-radius: 5px;
+  border-style: ridge;
+  border: 1px solid white;
+  padding: 5px;
+  text-decoration: none;
+  background-color: #ffffff;
+  font-weight: bold;
+  font-size: 16px;
+  height: 40px;
+}
+
+.Nome::placeholder {
+  color: rgba(0, 0, 0, 0.61);
+  font-weight: 600;
 }
 
 .select-game-mode-box {
   display: flex;
   flex-direction: row;
-  border: 3px solid black;
+  /* border: 3px solid black; */
   border-radius: 12px;
   margin: 20px 0 0 0;
 }

@@ -13,6 +13,9 @@ const $barra = document.querySelector(".barra");
 const $tempo = document.querySelector(".temp");
 const $selectGameMode = document.querySelector(".select-game-mode");
 const $indexPlayer = document.querySelector(".index");
+const $nome1 = document.querySelector(".Nome1");
+const $nome2 = document.querySelector(".Nome2");
+const $Nomezinho = document.querySelector(".Nomezinho");
 $startGameButton.addEventListener("click", startGame);
 $nextQuestionButton.addEventListener("click", displayNextQuestion);
 
@@ -24,17 +27,25 @@ let playerindex = 0;
 let contraContra = "";
 let duracao = 30;
 let tempo = duracao;
+let nome1;
+let nome2;
 const $player1 = document.querySelector(".Player1");
 $player1.addEventListener("click", () => {
   contraContra = "1 jogador";
   $player1.style.backgroundColor = "green";
   $player2.style.backgroundColor = "blue";
+  $Nomezinho.classList.add("hide");
 });
 const $player2 = document.querySelector(".Player2");
 $player2.addEventListener("click", () => {
   $player2.style.backgroundColor = "green";
   $player1.style.backgroundColor = "blue";
   contraContra = "2 jogadores";
+  nome1 = $nome1.value;
+  nome2 = $nome2.value;
+  $Nomezinho.classList.remove("hide");
+  console.log(`nome do jogador 1: ${nome1}`);
+  console.log(`nome do jogador 2: ${nome2}`);
 });
 let intervaloTempo;
 function Timer() {
@@ -78,9 +89,7 @@ function displayNextQuestion() {
   Timer();
   $indexPlayer.textContent =
     contraContra == "2 jogadores"
-      ? playerindex == 0
-        ? "Pergunta para jogador 1"
-        : "Pergunta para jogador 2"
+      ? `Pergunta para ${playerindex == 0 ? nome1 : nome2}`
       : "";
   $questionText.textContent = questions[currentQuestionIndex].question;
   $equation.textContent = questions[currentQuestionIndex].equation;
@@ -170,7 +179,35 @@ function selectAnswer(event) {
   $nextQuestionButton.classList.remove("hide");
   currentQuestionIndex++;
 }
+function createConfetti() {
+  const colors = [
+    "#ff0000",
+    "#00ff00",
+    "#0000ff",
+    "#ffff00",
+    "#ff00ff",
+    "#00ffff",
+  ];
+  const container = document.body;
 
+  for (let i = 0; i < 2000; i++) {
+    const confetti = document.createElement("div");
+    confetti.className = "confetti";
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.backgroundColor =
+      colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.width = 5 + Math.random() * 10 + "px";
+    confetti.style.height = 5 + Math.random() * 10 + "px";
+    confetti.style.animationDuration = 2 + Math.random() * 3 + "s";
+    confetti.style.animationDelay = Math.random() * 2 + "s";
+    container.appendChild(confetti);
+
+    // Remover o confeti após a animação
+    setTimeout(() => {
+      confetti.remove();
+    }, 10000);
+  }
+}
 function finishGame() {
   const totalQuestion = questions.length;
   const performance = Math.floor((totalCorrect * 100) / totalQuestion);
@@ -178,6 +215,8 @@ function finishGame() {
   const performancePlayer2 = Math.floor(totalCorrect2 * 10);
 
   let message = "";
+  let desempenho1 = "";
+  let desempenho2 = "";
 
   switch (true) {
     case performance >= 90:
@@ -192,20 +231,82 @@ function finishGame() {
     default:
       message = "Pode melhorar";
   }
+  switch (true) {
+    case performancePlayer1 >= 90:
+      desempenho1 = "Excelente :)";
+      break;
+    case performancePlayer1 >= 70:
+      desempenho1 = "Muito bom!";
+      break;
+    case performancePlayer1 >= 50:
+      desempenho1 = "Bom";
+      break;
+    default:
+      desempenho1 = "Pode melhorar";
+  }
+  switch (true) {
+    case performancePlayer2 >= 90:
+      desempenho2 = "Excelente :)";
+      break;
+    case performancePlayer2 >= 70:
+      desempenho2 = "Muito bom!";
+      break;
+    case performancePlayer2 >= 50:
+      desempenho2 = "Bom";
+      break;
+    default:
+      desempenho2 = "Pode melhorar";
+  }
+  document.body.style.backgroundColor =
+    performancePlayer1 != performancePlayer2 ? "red" : "blue";
 
+  createConfetti();
+  function result() {
+    if (performancePlayer1 > performancePlayer2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   $questionsContainer.innerHTML =
     contraContra == "2 jogadores"
       ? `
-       <div class="pont-Box">
-         <p class="final-message">
-          Jogador 1: ${performancePlayer1} </br>
-          Jogador 2: ${performancePlayer2} </br>
-          <strong>Resultado: ${performancePlayer1>performancePlayer2?"Player 1 ganhou":"Player 2 ganhou"}</strong>
-              </p>
-              <button onclick=window.location.reload() class="button">
-              Refazer teste
-              </button>
-       </div>
+       <div class="table-responsive">
+        <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Jogador</th>
+                        <th>Pontuação</th>
+                        <th>Desempenho</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="winner-row">
+                        <td><i class="fas fa-trophy medal gold"></i>1º</td>
+                        <td>${result() ? nome1 : nome2}</td>
+                        <td>${result() ? performancePlayer1 : performancePlayer2}</td>
+                        <td>${result() ? desempenho1 : desempenho2}</td>
+                    </tr>
+                    <tr class="winner-row">
+                        <td><i class="fas fa-trophy medal gold"></i>2º</td>
+                        <td>${result() ? nome2 : nome1}</td>
+                        <td>${result() ? performancePlayer2 : performancePlayer1}</td>
+                        <td>${result() ? desempenho2 : desempenho1}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <strong class="result">Resultado: ${
+              performancePlayer1 > performancePlayer2
+                ? nome1 + " venceu"
+                : performancePlayer2 > performancePlayer1
+                ? nome2 + " venceu"
+                : "Empate"
+            }!</strong>
+            <button onclick=window.location.reload() class="button">
+            Refazer teste
+            </button>
     `
       : `
 
