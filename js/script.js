@@ -41,11 +41,7 @@ $player2.addEventListener("click", () => {
   $player2.style.backgroundColor = "green";
   $player1.style.backgroundColor = "blue";
   contraContra = "2 jogadores";
-  nome1 = $nome1.value;
-  nome2 = $nome2.value;
   $Nomezinho.classList.remove("hide");
-  console.log(`nome do jogador 1: ${nome1}`);
-  console.log(`nome do jogador 2: ${nome2}`);
 });
 let intervaloTempo;
 function Timer() {
@@ -61,6 +57,7 @@ function Timer() {
     $tempo.textContent = tempo.toFixed(1) + "s";
     if (tempo <= 0) {
       clearInterval(intervaloTempo);
+      playerindex = playerindex==0?1:0;
       $message.textContent = "Tempo esgotado";
       $barraContainer.classList.add("hide");
       $message.classList.remove("hide");
@@ -75,6 +72,8 @@ function Timer() {
 }
 function startGame() {
   if (contraContra == "") return null;
+  nome1 = $nome1.value;
+  nome2 = $nome2.value;
   $questionsContainer.classList.remove("hide");
   $controleContainer.classList.add("hide");
   displayNextQuestion();
@@ -196,6 +195,7 @@ function createConfetti() {
     confetti.style.left = Math.random() * 100 + "vw";
     confetti.style.backgroundColor =
       colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.zIndex = 2;
     confetti.style.width = 5 + Math.random() * 10 + "px";
     confetti.style.height = 5 + Math.random() * 10 + "px";
     confetti.style.animationDuration = 2 + Math.random() * 3 + "s";
@@ -211,8 +211,8 @@ function createConfetti() {
 function finishGame() {
   const totalQuestion = questions.length;
   const performance = Math.floor((totalCorrect * 100) / totalQuestion);
-  const performancePlayer1 = Math.floor(totalCorrect1 * 10);
-  const performancePlayer2 = Math.floor(totalCorrect2 * 10);
+  const performancePlayer1 = Math.floor(totalCorrect1 * 20);
+  const performancePlayer2 = Math.floor(totalCorrect2 * 20);
 
   let message = "";
   let desempenho1 = "";
@@ -285,19 +285,23 @@ function finishGame() {
                     <tr class="winner-row">
                         <td><i class="fas fa-trophy medal gold"></i>1º</td>
                         <td>${result() ? nome1 : nome2}</td>
-                        <td>${result() ? performancePlayer1 : performancePlayer2}</td>
+                        <td>${
+                          result() ? performancePlayer1 : performancePlayer2
+                        }</td>
                         <td>${result() ? desempenho1 : desempenho2}</td>
                     </tr>
                     <tr class="winner-row">
                         <td><i class="fas fa-trophy medal gold"></i>2º</td>
                         <td>${result() ? nome2 : nome1}</td>
-                        <td>${result() ? performancePlayer2 : performancePlayer1}</td>
+                        <td>${
+                          result() ? performancePlayer2 : performancePlayer1
+                        }</td>
                         <td>${result() ? desempenho2 : desempenho1}</td>
                     </tr>
                 </tbody>
             </table>
             </div>
-            <strong class="result">Resultado: ${
+            <strong class="result" style="color: ${performancePlayer1 != performancePlayer2?"red":"blue"}">Resultado: ${
               performancePlayer1 > performancePlayer2
                 ? nome1 + " venceu"
                 : performancePlayer2 > performancePlayer1
@@ -342,133 +346,105 @@ const questions = [
     ],
   },
   {
-    question: "Qual é a derivada de f(x) = 3x² + 2x?",
+    question: "Qual é a média aritmética dos números 5, 7, 9 e 11?",
     equation: null,
     answers: [
-      { text: "6x + 2", correct: true },
-      { text: "3x + 2", correct: false },
-      { text: "6x", correct: false },
-      { text: "5x + 2", correct: false },
+      { text: "7", correct: false },
+      { text: "8", correct: true },
+      { text: "9", correct: false },
+      { text: "10", correct: false },
     ],
   },
   {
-    question: "Resolva a inequação:",
-    equation: "2x - 5 > 3",
+    question: "Resolva a equação do primeiro grau:",
+    equation: "2x + 8 = 20",
     answers: [
-      { text: "x > 4", correct: true },
-      { text: "x < 4", correct: false },
-      { text: "x > 5", correct: false },
-      { text: "x < 5", correct: false },
+      { text: "x = 4", correct: false },
+      { text: "x = 6", correct: true },
+      { text: "x = 8", correct: false },
+      { text: "x = 10", correct: false },
     ],
   },
-  // {
-  //   question: "Qual é o valor de sen(π/2)?",
-  //   equation: null,
-  //   answers: [
-  //     { text: "0", correct: false },
-  //     { text: "1", correct: true },
-  //     { text: "-1", correct: false },
-  //     { text: "π/2", correct: false },
-  //   ],
-  // },
-  // {
-  //   question: "Simplifique a expressão:",
-  //   equation: "(x² • x³) / x⁴",
-  //   answers: [
-  //     { text: "x", correct: true },
-  //     { text: "x²", correct: false },
-  //     { text: "x⁵", correct: false },
-  //     { text: "1", correct: false },
-  //   ],
-  // },
-  // {
-  //   question: "Qual é a solução para:",
-  //   equation: "log₂(8) = ?",
-  //   answers: [
-  //     { text: "2", correct: false },
-  //     { text: "3", correct: true },
-  //     { text: "4", correct: false },
-  //     { text: "1", correct: false },
-  //   ],
-  // },
-  // {
-  //   question: "Resolva o sistema:",
-  //   equation: "x + y = 10\nx - y = 2",
-  //   answers: [
-  //     { text: "x=6, y=4", correct: true },
-  //     { text: "x=5, y=5", correct: false },
-  //     { text: "x=8, y=2", correct: false },
-  //     { text: "x=7, y=3", correct: false },
-  //   ],
-  // },
-  // {
-  //   question: "Calcule a integral indefinida:",
-  //   equation: "∫(2x dx)",
-  //   answers: [
-  //     { text: "x² + C", correct: true },
-  //     { text: "2x² + C", correct: false },
-  //     { text: "x²", correct: false },
-  //     { text: "2x + C", correct: false },
-  //   ],
-  // },
-  // {
-  //   question: "Qual é o valor de:",
-  //   equation: "cos(60°)",
-  //   answers: [
-  //     { text: "√3/2", correct: false },
-  //     { text: "1/2", correct: true },
-  //     { text: "√2/2", correct: false },
-  //     { text: "0", correct: false },
-  //   ],
-  // },
-  // {
-  //   question: "Fatorize a expressão:",
-  //   equation: "x² - 9",
-  //   answers: [
-  //     { text: "(x-3)(x+3)", correct: true },
-  //     { text: "(x-9)(x+1)", correct: false },
-  //     { text: "(x-3)²", correct: false },
-  //     { text: "(x+3)²", correct: false },
-  //   ],
-  // },
-  // {
-  //   question: "Qual é a fórmula de Bhaskara?",
-  //   equation: null,
-  //   answers: [
-  //     { text: "x = (-b ± √(b² - 4ac))/2a", correct: true },
-  //     { text: "x = b² - 4ac", correct: false },
-  //     { text: "x = (-b ± b²)/2a", correct: false },
-  //     { text: "x = ±√(b² - 4ac)", correct: false },
-  //   ],
-  // },
-  // {
-  //   question: "Resolva a equação logarítmica:",
-  //   equation: "log₅(25) = ?",
-  //   answers: [
-  //     { text: "5", correct: false },
-  //     { text: "2", correct: true },
-  //     { text: "25", correct: false },
-  //     { text: "1", correct: false },
-  //   ],
-  // },
-  // {
-  //   question: "Qual é o domínio da função:",
-  //   equation: "f(x) = √(x - 4)",
-  //   answers: [
-  //     { text: "x ≥ 4", correct: true },
-  //     { text: "x > 4", correct: false },
-  //     { text: "x ∈ ℝ", correct: false },
-  //     { text: "x ≤ 4", correct: false },
-  //   ],
-  // },
-  // {
-  //   question: "Calcule o limite:",
-  //   equation: "lim(x→0) (sen(x)/x)",
-  //   answers: [
-  //     { text: "0", correct: false },
-  //     { text: "1", correct: true },
-  //     { text: "∞", correct: false },
-  //     { text: "Não existe", correct: false },
-  //   ],
-  // },
+  {
+    question:
+      "Em uma urna há 3 bolas vermelhas, 2 azuis e 5 verdes. Qual a probabilidade de tirar uma bola azul?",
+    equation: null,
+    answers: [
+      { text: "20%", correct: true },
+      { text: "30%", correct: false },
+      { text: "40%", correct: false },
+      { text: "50%", correct: false },
+    ],
+  },
+  {
+    question: "Qual é o valor de x na proporção:",
+    equation: "3/5 = x/15",
+    answers: [
+      { text: "5", correct: false },
+      { text: "7", correct: false },
+      { text: "9", correct: true },
+      { text: "11", correct: false },
+    ],
+  },
+  {
+    question: "Calcule o perímetro de um retângulo com lados de 8cm e 12cm:",
+    equation: null,
+    answers: [
+      { text: "20cm", correct: false },
+      { text: "40cm", correct: true },
+      { text: "96cm", correct: false },
+      { text: "80cm", correct: false },
+    ],
+  },
+  {
+    question: "Qual é a raiz quadrada de 144?",
+    equation: null,
+    answers: [
+      { text: "12", correct: true },
+      { text: "14", correct: false },
+      { text: "16", correct: false },
+      { text: "18", correct: false },
+    ],
+  },
+  {
+    question: "Resolva a expressão numérica:",
+    equation: "10 + 5 × 2 - 8 ÷ 4",
+    answers: [
+      { text: "17", correct: false },
+      { text: "18", correct: true },
+      { text: "19", correct: false },
+      { text: "20", correct: false },
+    ],
+  },
+  {
+    question: "Qual é o resultado de 30% de 150?",
+    equation: null,
+    answers: [
+      { text: "30", correct: false },
+      { text: "35", correct: false },
+      { text: "40", correct: false },
+      { text: "45", correct: true },
+    ],
+  },
+  {
+    question:
+      "Em um triângulo retângulo, os catetos medem 3cm e 4cm. Quanto mede a hipotenusa?",
+    equation: null,
+    answers: [
+      { text: "5cm", correct: true },
+      { text: "6cm", correct: false },
+      { text: "7cm", correct: false },
+      { text: "8cm", correct: false },
+    ],
+  },
+  {
+    question: "Qual é o valor de y na equação:",
+    equation: "3(y - 2) = 2(y + 4)",
+    answers: [
+      { text: "10", correct: false },
+      { text: "12", correct: false },
+      { text: "14", correct: true },
+      { text: "16", correct: false },
+    ],
+  },
 ];

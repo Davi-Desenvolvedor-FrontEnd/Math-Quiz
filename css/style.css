@@ -40,7 +40,7 @@ body::before {
 .container {
   background: linear-gradient(#0096c7, #00b4d8, #48cae4);
   width: 50%;
-  height: 500px;
+  min-height: 500px;
   border-radius: 8px;
   /* border: 1px solid white; */
   padding: 10px;
@@ -60,6 +60,7 @@ body::before {
   height: 100%;
   max-width: 70%;
 }
+
 .barra-content {
   display: flex;
   flex-direction: row;
