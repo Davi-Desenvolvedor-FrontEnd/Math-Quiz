@@ -57,13 +57,14 @@ function Timer() {
     $tempo.textContent = tempo.toFixed(1) + "s";
     if (tempo <= 0) {
       clearInterval(intervaloTempo);
-      playerindex = playerindex==0?1:0;
+      playerindex = playerindex == 0 ? 1 : 0;
       $message.textContent = "Tempo esgotado";
       $barraContainer.classList.add("hide");
       $message.classList.remove("hide");
-      document
-        .querySelectorAll(".answer")
-        .forEach((btn) => (btn.disabled = true));
+      document.querySelectorAll(".answer").forEach((btn) => {
+        btn.disabled = true;
+        btn.style.cursor = "not-allowed";
+      });
       currentQuestionIndex++;
       // setTimeout(displayNextQuestion, 300)
       $nextQuestionButton.classList.remove("hide");
@@ -195,7 +196,7 @@ function createConfetti() {
     confetti.style.left = Math.random() * 100 + "vw";
     confetti.style.backgroundColor =
       colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.zIndex = 2;
+    confetti.style.zIndex = 1;
     confetti.style.width = 5 + Math.random() * 10 + "px";
     confetti.style.height = 5 + Math.random() * 10 + "px";
     confetti.style.animationDuration = 2 + Math.random() * 3 + "s";
@@ -217,6 +218,13 @@ function finishGame() {
   let message = "";
   let desempenho1 = "";
   let desempenho2 = "";
+
+  function scorePorCento() {
+    const scorePC = Math.floor((totalCorrect * 100) / totalQuestion);
+    return scorePC;
+  }
+
+  let totalErrada = totalQuestion - totalCorrect;
 
   switch (true) {
     case performance >= 90:
@@ -301,12 +309,12 @@ function finishGame() {
                 </tbody>
             </table>
             </div>
-            <strong class="result" style="color: ${performancePlayer1 != performancePlayer2?"red":"blue"}">Resultado: ${
+            <strong class="result" style="color: ${performancePlayer1 != performancePlayer2 ? "red" : "blue"}">Resultado: ${
               performancePlayer1 > performancePlayer2
                 ? nome1 + " venceu"
                 : performancePlayer2 > performancePlayer1
-                ? nome2 + " venceu"
-                : "Empate"
+                  ? nome2 + " venceu"
+                  : "Empate"
             }!</strong>
             <button onclick=window.location.reload() class="button">
             Refazer teste
@@ -314,10 +322,33 @@ function finishGame() {
     `
       : `
 
-     <p class="final-message">
-        Você acertou ${totalCorrect} de ${totalQuestion} questões!
-        <span>Resultado: ${message}</span>
-     </p>
+     <div class="final-message">
+        <img src="../images/trofeu.png" class="trofeu-icon" />
+        <div class="feedback-message">
+        ${message}
+        </div>
+        <div class="score-circle" style="--progress: ${scorePorCento()}%">
+          <div class="score-inner">
+            <div class="text-6xl">
+            ${totalCorrect}
+            </div>
+            <div class="text-xl">
+           / ${totalQuestion}
+            </div>
+          </div>
+        </div>
+        <div class="statics-container">
+         <div class="acertos-box">
+           <span id="correct-text">${totalCorrect}</span>
+           <p>Corretas</p>
+         </div>
+         <div class="erros-box">
+           <span id="wrong-text">${totalErrada}</span>
+           <p>Erradas</p>
+          </div>
+        </div>
+        
+     </div>
      <button onclick=window.location.reload() class="button">
      Refazer teste
      </button>
