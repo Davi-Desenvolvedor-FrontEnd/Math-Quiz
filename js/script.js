@@ -11,13 +11,18 @@ const $controleContainer = document.querySelector(".controle-container");
 const $barraContainer = document.querySelector(".barra-container");
 const $barra = document.querySelector(".barra");
 const $tempo = document.querySelector(".temp");
-const $selectGameMode = document.querySelector(".select-game-mode");
+const $selectGameModeTitle = document.querySelector(".select-game-mode");
+const $selectGameModeBox = document.querySelector(".select-game-mode-box");
 const $indexPlayer = document.querySelector(".index");
 const $nome1 = document.querySelector(".Nome1");
 const $nome2 = document.querySelector(".Nome2");
+const $nome3 = document.querySelector(".Nome3");
 const $Nomezinho = document.querySelector(".Nomezinho");
-$startGameButton.addEventListener("click", startGame);
+const $nextContainer = document.querySelector(".next-container");
+const $nextButton = $nextContainer.querySelector("button");
+$startGameButton.addEventListener("click", selectedModeGame);
 $nextQuestionButton.addEventListener("click", displayNextQuestion);
+$nextButton.addEventListener("click", startGame);
 
 let currentQuestionIndex = 0;
 let totalCorrect = 0;
@@ -27,23 +32,83 @@ let playerindex = 0;
 let contraContra = "";
 let duracao = 30;
 let tempo = duracao;
-let nome1;
-let nome2;
+let intervaloTempo;
+
+function atualizarBotao() {
+  $nextButton.removeEventListener("click", startGame);
+  const nome1 = $nome1.value.trim();
+  const nome2 = $nome2.value.trim();
+  const nome3 = $nome3.value.trim();
+
+  if (contraContra !== "1 jogador") {
+    if ($nome3.classList.contains("hide")) {
+      if (nome1 !== "" && nome2 !== "") {
+        $nextButton.style.cursor = "pointer";
+        $nextButton.style.background = "";
+        $nextButton.disabled = false;
+        $nextButton.addEventListener("click", startGame);
+      } else {
+        $nextButton.style.cursor = "not-allowed";
+        $nextButton.style.background = "#1F1FFF";
+        $nextButton.disabled = true;
+      }
+    } else {
+      if (nome1 !== "" && nome2 !== "" && nome3 !== "") {
+        $nextButton.style.cursor = "pointer";
+        $nextButton.style.background = "";
+        $nextButton.disabled = false;
+        $nextButton.addEventListener("click", startGame);
+      } else {
+        $nextButton.style.cursor = "not-allowed";
+        $nextButton.style.background = "#1F1FFF";
+        $nextButton.disabled = true;
+      }
+    }
+  } else {
+    $nextButton.addEventListener("click", startGame);
+  }
+}
+
+// Adiciona eventos para validar enquanto o usuário digita
+$nome1.addEventListener("input", atualizarBotao);
+$nome2.addEventListener("input", atualizarBotao);
+$nome3.addEventListener("input", atualizarBotao);
+
 const $player1 = document.querySelector(".Player1");
 $player1.addEventListener("click", () => {
   contraContra = "1 jogador";
-  $player1.style.backgroundColor = "green";
+  $player3.style.backgroundColor = "blue";
   $player2.style.backgroundColor = "blue";
+  $player1.style.backgroundColor = "green";
   $Nomezinho.classList.add("hide");
+  $nome3.classList.add("hide");
+  $nextButton.style.cursor = "pointer";
+  $nextButton.style.background = "";
+  $nextButton.disabled = false;
 });
+
 const $player2 = document.querySelector(".Player2");
 $player2.addEventListener("click", () => {
+  contraContra = "2 jogadores";
+  $player3.style.backgroundColor = "blue";
   $player2.style.backgroundColor = "green";
   $player1.style.backgroundColor = "blue";
-  contraContra = "2 jogadores";
   $Nomezinho.classList.remove("hide");
+  $nome3.classList.add("hide");
+  atualizarBotao();
 });
-let intervaloTempo;
+
+const $player3 = document.querySelector(".Player3");
+$player3.addEventListener("click", () => {
+  contraContra = "3 jogadores";
+  $player3.style.backgroundColor = "green";
+  $player2.style.backgroundColor = "blue";
+  $player1.style.backgroundColor = "blue";
+  $Nomezinho.classList.remove("hide");
+  $nome3.classList.remove("hide");
+  atualizarBotao();
+});
+
 function Timer() {
   $barraContainer.classList.remove("hide");
   $message.classList.add("hide");
@@ -71,13 +136,44 @@ function Timer() {
     }
   }, 100);
 }
+
+function selectedModeGame() {
+  $selectGameModeTitle.classList.remove("hide");
+  $selectGameModeBox.classList.remove("hide");
+  $startGameButton.classList.add("hide");
+  $quizTitle.classList.add("hide");
+  $nextContainer.classList.remove("hide");
+  $nextButton.style.cursor = "not-allowed";
+  $nextButton.style.background = "#1F1FFF";
+  $nextButton.disabled = true;
+}
+
 function startGame() {
-  if (contraContra == "") return null;
-  nome1 = $nome1.value;
-  nome2 = $nome2.value;
   $questionsContainer.classList.remove("hide");
   $controleContainer.classList.add("hide");
   displayNextQuestion();
+}
+
+function getNamePlayer(i) {
+  const nome1Valor = $nome1.value.trim();
+  const nome2Valor = $nome2.value.trim();
+  const nome3Valor = $nome3.value.trim();
+  let nome;
+  
+  switch (i) {
+    case 1:
+      nome = nome1Valor;
+      break;
+    case 2:
+      nome = nome2Valor;
+      break;
+    case 3:
+      nome = nome3Valor;
+      break;
+    default:
+      nome = "";
+  }
+  return nome;
 }
 
 function displayNextQuestion() {
@@ -88,9 +184,7 @@ function displayNextQuestion() {
   }
   Timer();
   $indexPlayer.textContent =
-    contraContra == "2 jogadores"
-      ? `Pergunta para ${playerindex == 0 ? nome1 : nome2}`
-      : "";
+    contraContra != "1 jogador" ? `Pergunta para ${getNamePlayer()}` : "";
   $questionText.textContent = questions[currentQuestionIndex].question;
   $equation.textContent = questions[currentQuestionIndex].equation;
   questions[currentQuestionIndex].answers.forEach((answers) => {

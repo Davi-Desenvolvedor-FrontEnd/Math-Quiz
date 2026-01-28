@@ -1,13 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="stylesheet" href="../CSS/style.css" />
-    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="../images/favicon.ico"
+      type="image/x-icon"
+    />
     <script src="../JS/script.js" async></script>
     <title>Math Quiz</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
     <div class="container">
@@ -37,42 +48,46 @@
       <div class="controle-container">
         <h1 class="quiz-title">Math Quiz</h1>
         <br /><button class="start-quiz button">Começar Quiz</button>
-        <!-- <h3 class="select-game-mode hide">Selecione o modo de jogo:</h3> -->
-        <div class="select-game-mode-box">
+        <h3 class="select-game-mode hide">Selecione o modo de jogo:</h3>
+        <div class="select-game-mode-box hide">
           <button class="Player1 button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-person-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
-              />
-            </svg>
+            <i class="fa-solid fa-user"></i>
             1 Jogador
           </button>
           <button class="Player2 button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-people-fill"
-              viewBox="0 0 16 16"
-              >
-              <path
-              d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"
-              />
-            </svg>
+            <i class="fa-solid fa-user-group"></i>
             2 Jogadores
+          </button>
+          <button class="Player3 button">
+            <i class="fa-solid fa-users"></i>
+            3 Jogadores
           </button>
         </div>
         <div class="Nomezinho hide">
-          <input required type="text" class="Nome1 Nome" placeholder="Nome do Jogador 1:">
-          <input required type="text" class="Nome2 Nome" placeholder="Nome do Jogador 2:">
+          <input
+            required
+            type="text"
+            class="Nome1 Nome"
+            placeholder="Nome do Jogador 1:"
+          />
+          <input
+            required
+            type="text"
+            class="Nome2 Nome"
+            placeholder="Nome do Jogador 2:"
+          />
+          <input
+            required
+            type="text"
+            class="Nome3 Nome hide"
+            placeholder="Nome do Jogador 3:"
+          />
+          
+        </div>
+        <div class="next-container hide">
+          <button class="next button">
+            Avançar
+          </button>
         </div>
       </div>
     </div>
