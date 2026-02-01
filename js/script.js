@@ -453,15 +453,10 @@ function finishGame() {
     default:
       desempenho3 = "Pode melhorar";
   }
-  if (contraContra == "3 jogadores") {
-    setTimeout(() => {
-      createConfetti();
-      container.classList.remove("camada");
-    }, 9000);
-  } else {
-    document.body.style.backgroundColor = "yellow";
-    createConfetti();
-  }
+  
+  document.body.style.backgroundColor = "yellow";
+  createConfetti();
+
   function result() {
     if (performancePlayer1 > performancePlayer2) {
       return true;
