@@ -28,17 +28,21 @@ let currentQuestionIndex = 0;
 let totalCorrect = 0;
 let totalCorrect1 = 0;
 let totalCorrect2 = 0;
+let totalCorrect3 = 0;
 let playerindex = 0;
 let contraContra = "";
 let duracao = 30;
 let tempo = duracao;
 let intervaloTempo;
+let nome1;
+let nome2;
+let nome3;
 
 function atualizarBotao() {
   $nextButton.removeEventListener("click", startGame);
-  const nome1 = $nome1.value.trim();
-  const nome2 = $nome2.value.trim();
-  const nome3 = $nome3.value.trim();
+  nome1 = $nome1.value.trim();
+  nome2 = $nome2.value.trim();
+  nome3 = $nome3.value.trim();
 
   if (contraContra !== "1 jogador") {
     if ($nome3.classList.contains("hide")) {
@@ -159,15 +163,15 @@ function getNamePlayer(i) {
   const nome2Valor = $nome2.value.trim();
   const nome3Valor = $nome3.value.trim();
   let nome;
-  
+
   switch (i) {
-    case 1:
+    case 0:
       nome = nome1Valor;
       break;
-    case 2:
+    case 1:
       nome = nome2Valor;
       break;
-    case 3:
+    case 2:
       nome = nome3Valor;
       break;
     default:
@@ -184,7 +188,9 @@ function displayNextQuestion() {
   }
   Timer();
   $indexPlayer.textContent =
-    contraContra != "1 jogador" ? `Pergunta para ${getNamePlayer()}` : "";
+    contraContra != "1 jogador"
+      ? `Pergunta para ${getNamePlayer(playerindex)}`
+      : "";
   $questionText.textContent = questions[currentQuestionIndex].question;
   $equation.textContent = questions[currentQuestionIndex].equation;
   questions[currentQuestionIndex].answers.forEach((answers) => {
@@ -256,6 +262,50 @@ function selectAnswer(event) {
         console.log("Pontuação do Jogador 2: " + totalCorrect2);
       }
     }
+  } else {
+    if (playerindex == 0) {
+      if (answerClicked.dataset.correct) {
+        document.body.classList.add("correct");
+        $feedback.textContent = "Resposta certa!";
+        totalCorrect1++;
+        playerindex = 1;
+        console.log("Pontuação do Jogador 1: " + totalCorrect1);
+      } else {
+        document.body.classList.add("incorrect");
+        answerClicked.classList.add("incorrect");
+        $feedback.textContent = "Resposta errada!";
+        playerindex = 1;
+        console.log("Pontuação do Jogador 1: " + totalCorrect1);
+      }
+    } else if (playerindex == 1) {
+      if (answerClicked.dataset.correct) {
+        document.body.classList.add("correct");
+        $feedback.textContent = "Resposta certa!";
+        totalCorrect2++;
+        playerindex = 2;
+        console.log("Pontuação do Jogador 2: " + totalCorrect2);
+      } else {
+        document.body.classList.add("incorrect");
+        answerClicked.classList.add("incorrect");
+        $feedback.textContent = "Resposta errada!";
+        playerindex = 2;
+        console.log("Pontuação do Jogador 2: " + totalCorrect2);
+      }
+    } else {
+      if (answerClicked.dataset.correct) {
+        document.body.classList.add("correct");
+        $feedback.textContent = "Resposta certa!";
+        totalCorrect3++;
+        playerindex = 0;
+        console.log("Pontuação do Jogador 3: " + totalCorrect3);
+      } else {
+        document.body.classList.add("incorrect");
+        answerClicked.classList.add("incorrect");
+        $feedback.textContent = "Resposta errada!";
+        playerindex = 0;
+        console.log("Pontuação do Jogador 3: " + totalCorrect3);
+      }
+    }
   }
   // Exibe o feedback com base na resposta
 
@@ -290,7 +340,7 @@ function createConfetti() {
     confetti.style.left = Math.random() * 100 + "vw";
     confetti.style.backgroundColor =
       colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.zIndex = 1;
+    confetti.style.zIndex = -1;
     confetti.style.width = 5 + Math.random() * 10 + "px";
     confetti.style.height = 5 + Math.random() * 10 + "px";
     confetti.style.animationDuration = 2 + Math.random() * 3 + "s";
@@ -308,15 +358,46 @@ function finishGame() {
   const performance = Math.floor((totalCorrect * 100) / totalQuestion);
   const performancePlayer1 = Math.floor(totalCorrect1 * 20);
   const performancePlayer2 = Math.floor(totalCorrect2 * 20);
+  const performancePlayer3 = Math.floor(totalCorrect3 * 20);
 
   let message = "";
   let desempenho1 = "";
   let desempenho2 = "";
+  let desempenho3 = "";
 
   function scorePorCento() {
     const scorePC = Math.floor((totalCorrect * 100) / totalQuestion);
     return scorePC;
   }
+
+  function rankPlayers(player1, score1, player2, score2, player3, score3) {
+    // Cria array de objetos com nome e pontuação
+    const players = [
+      { name: player1, score: score1 },
+      { name: player2, score: score2 },
+      { name: player3, score: score3 },
+    ];
+
+    // Ordena do maior para o menor
+    players.sort((a, b) => b.score - a.score);
+
+    // Retorna objeto com a classificação
+    return {
+      primeiro: players[0],
+      segundo: players[1],
+      terceiro: players[2],
+    };
+  }
+
+  // Como usar:
+  const classificacao = rankPlayers(
+    nome1,
+    performancePlayer1,
+    nome2,
+    performancePlayer2,
+    nome3,
+    performancePlayer3,
+  );
 
   let totalErrada = totalQuestion - totalCorrect;
 
@@ -359,10 +440,28 @@ function finishGame() {
     default:
       desempenho2 = "Pode melhorar";
   }
-  document.body.style.backgroundColor =
-    performancePlayer1 != performancePlayer2 ? "red" : "blue";
-
-  createConfetti();
+  switch (true) {
+    case performancePlayer3 >= 90:
+      desempenho3 = "Excelente :)";
+      break;
+    case performancePlayer3 >= 70:
+      desempenho3 = "Muito bom!";
+      break;
+    case performancePlayer3 >= 50:
+      desempenho3 = "Bom";
+      break;
+    default:
+      desempenho3 = "Pode melhorar";
+  }
+  if (contraContra == "3 jogadores") {
+    setTimeout(() => {
+      createConfetti();
+      container.classList.remove("camada");
+    }, 9000);
+  } else {
+    document.body.style.backgroundColor = "yellow";
+    createConfetti();
+  }
   function result() {
     if (performancePlayer1 > performancePlayer2) {
       return true;
@@ -370,9 +469,97 @@ function finishGame() {
       return false;
     }
   }
+  // Funções auxiliares que você precisa adicionar
+  const performances = [
+    performancePlayer1,
+    performancePlayer2,
+    performancePlayer3,
+  ];
+  const maiorDesempenho = Math.max(...performances);
+  const desempenhosOrdenados = [...performances].sort((a, b) => b - a);
+  const segundoDesempenho = desempenhosOrdenados[1];
+
+  function getTrofeu(playerNum) {
+    const performance = performances[playerNum - 1];
+    if (performance === maiorDesempenho) {
+      return "../images/trofeu_ouro.png"; // imagem do troféu de ouro
+    } else if (performance === segundoDesempenho) {
+      return "../images/trofeu_prata.png"; // imagem do troféu de prata
+    } else {
+      return "../images/trofeu_bronze.png"; // imagem do troféu de bronze
+    }
+  }
+
+  // Função campeao atualizada para lidar com empates
+  function campeao() {
+    const performances = [
+      performancePlayer1,
+      performancePlayer2,
+      performancePlayer3,
+    ];
+    const max = Math.max(...performances);
+    const jogadoresComMax = performances.filter((p) => p === max).length;
+
+    if (jogadoresComMax === 3) {
+      return "EMPATE TRIPLO! 🏆🏆🏆";
+    } else if (jogadoresComMax === 2) {
+      const jogadoresEmpate = performances
+        .map((p, i) => (p === max ? i + 1 : null))
+        .filter((i) => i !== null);
+      return `EMPATE! Jogadores ${jogadoresEmpate.join(" e ")} 🏆`;
+    } else {
+      const vencedor = performances.indexOf(max) + 1;
+      return `JOGADOR ${vencedor} VENCEU! 🏆`;
+    }
+  }
+
   $questionsContainer.innerHTML =
-    contraContra == "2 jogadores"
+    contraContra == "3 jogadores"
       ? `
+    <div class="final-message">
+      <div class="feedback-message">
+        ${campeao()}
+      </div>
+    
+      <div class="players-container">
+        <!-- Jogador 1 -->
+        <div class="player-box ${performancePlayer1 === maiorDesempenho ? "gold" : performancePlayer1 === segundoDesempenho ? "silver" : "bronze"}">
+            <div class="player-title">${nome1}</div>
+            <div class="player-score">${performancePlayer1}</div>
+            <img src="${getTrofeu(1)}" class="trofeu-icon" />
+            <div class="player-medal">
+                ${performancePlayer1 === maiorDesempenho ? "🥇" : performancePlayer1 === segundoDesempenho ? "🥈" : "🥉"}
+            </div>
+        </div>
+        
+        <!-- Jogador 2 -->
+        <div class="player-box ${performancePlayer2 === maiorDesempenho ? "gold" : performancePlayer2 === segundoDesempenho ? "silver" : "bronze"}">
+            <div class="player-title">${nome2}</div>
+            <div class="player-score">${performancePlayer2}</div>
+            <img src="${getTrofeu(2)}" class="trofeu-icon" />
+            <div class="player-medal">
+                ${performancePlayer2 === maiorDesempenho ? "🥇" : performancePlayer2 === segundoDesempenho ? "🥈" : "🥉"}
+            </div>
+        </div>
+        
+        <!-- Jogador 3 -->
+        <div class="player-box ${performancePlayer3 === maiorDesempenho ? "gold" : performancePlayer3 === segundoDesempenho ? "silver" : "bronze"}">
+            <div class="player-title">${nome3}</div>
+            <div class="player-score">${performancePlayer3}</div>
+            <img src="${getTrofeu(3)}" class="trofeu-icon" />
+            <div class="player-medal">
+                ${performancePlayer3 === maiorDesempenho ? "🥇" : performancePlayer3 === segundoDesempenho ? "🥈" : "🥉"}
+            </div>
+        </div>
+    </div>
+    
+    <button onclick="window.location.reload()" class="button">
+        Refazer teste
+    </button>
+</div>
+          `
+      : contraContra == "2 jogadores"
+        ? `
        <div class="table-responsive">
         <table class="table table-striped table-hover">
                 <thead>
@@ -414,7 +601,7 @@ function finishGame() {
             Refazer teste
             </button>
     `
-      : `
+        : `
 
      <div class="final-message">
         <img src="../images/trofeu.png" class="trofeu-icon" />
