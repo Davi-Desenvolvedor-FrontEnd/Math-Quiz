@@ -511,7 +511,7 @@ function finishGame() {
   $questionsContainer.innerHTML =
     contraContra == "3 jogadores"
       ? `
-    <div class="final-message">
+    <div class="final-message-threePlayers">
       <div class="feedback-message">
         ${campeao()}
       </div>
@@ -519,8 +519,10 @@ function finishGame() {
       <div class="players-container">
         <!-- Jogador 1 -->
         <div class="player-box ${performancePlayer1 === maiorDesempenho ? "gold" : performancePlayer1 === segundoDesempenho ? "silver" : "bronze"}">
-            <div class="player-title">${nome1}</div>
-            <div class="player-score">${performancePlayer1}</div>
+            <div class="player-header">
+              <div class="player-title">${nome1}</div>
+              <div class="player-score">${performancePlayer1}</div>
+            </div>
             <img src="${getTrofeu(1)}" class="trofeu-icon" />
             <div class="player-medal">
                 ${performancePlayer1 === maiorDesempenho ? "🥇" : performancePlayer1 === segundoDesempenho ? "🥈" : "🥉"}
@@ -529,8 +531,10 @@ function finishGame() {
         
         <!-- Jogador 2 -->
         <div class="player-box ${performancePlayer2 === maiorDesempenho ? "gold" : performancePlayer2 === segundoDesempenho ? "silver" : "bronze"}">
-            <div class="player-title">${nome2}</div>
-            <div class="player-score">${performancePlayer2}</div>
+            <div class="player-header">
+              <div class="player-title">${nome2}</div>
+              <div class="player-score">${performancePlayer2}</div>
+            </div>
             <img src="${getTrofeu(2)}" class="trofeu-icon" />
             <div class="player-medal">
                 ${performancePlayer2 === maiorDesempenho ? "🥇" : performancePlayer2 === segundoDesempenho ? "🥈" : "🥉"}
@@ -539,8 +543,10 @@ function finishGame() {
         
         <!-- Jogador 3 -->
         <div class="player-box ${performancePlayer3 === maiorDesempenho ? "gold" : performancePlayer3 === segundoDesempenho ? "silver" : "bronze"}">
-            <div class="player-title">${nome3}</div>
-            <div class="player-score">${performancePlayer3}</div>
+            <div class="player-header">
+              <div class="player-title">${nome3}</div>
+              <div class="player-score">${performancePlayer3}</div>
+            </div>
             <img src="${getTrofeu(3)}" class="trofeu-icon" />
             <div class="player-medal">
                 ${performancePlayer3 === maiorDesempenho ? "🥇" : performancePlayer3 === segundoDesempenho ? "🥈" : "🥉"}
@@ -555,51 +561,45 @@ function finishGame() {
           `
       : contraContra == "2 jogadores"
         ? `
-       <div class="table-responsive">
-        <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Posição</th>
-                        <th>Jogador</th>
-                        <th>Pontuação</th>
-                        <th>Desempenho</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="winner-row">
-                        <td><i class="fas fa-trophy medal gold"></i>1º</td>
-                        <td>${result() ? nome1 : nome2}</td>
-                        <td>${
-                          result() ? performancePlayer1 : performancePlayer2
-                        }</td>
-                        <td>${result() ? desempenho1 : desempenho2}</td>
-                    </tr>
-                    <tr class="winner-row">
-                        <td><i class="fas fa-trophy medal gold"></i>2º</td>
-                        <td>${result() ? nome2 : nome1}</td>
-                        <td>${
-                          result() ? performancePlayer2 : performancePlayer1
-                        }</td>
-                        <td>${result() ? desempenho2 : desempenho1}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="final-message-twoPlayers">
+      <div class="feedback-message">
+        ${campeao()}
+      </div>
+    
+      <div class="players-container">
+        <!-- Jogador 1 -->
+        <div class="player-box ${performancePlayer1 === maiorDesempenho ? "gold" : performancePlayer1 === segundoDesempenho ? "silver" : "bronze"}">
+            <div class="player-header">
+              <div class="player-title">${nome1}</div>
+              <div class="player-score">${performancePlayer1}</div>
             </div>
-            <strong class="result" style="color: ${performancePlayer1 != performancePlayer2 ? "red" : "blue"}">Resultado: ${
-              performancePlayer1 > performancePlayer2
-                ? nome1 + " venceu"
-                : performancePlayer2 > performancePlayer1
-                  ? nome2 + " venceu"
-                  : "Empate"
-            }!</strong>
-            <button onclick=window.location.reload() class="button">
-            Refazer teste
-            </button>
+            <img src="${getTrofeu(1)}" class="trofeu-icon" />
+            <div class="player-medal">
+                ${performancePlayer1 === maiorDesempenho ? "🥇" : performancePlayer1 === segundoDesempenho && "🥈"}
+            </div>
+        </div>
+        
+        <!-- Jogador 2 -->
+        <div class="player-box ${performancePlayer2 === maiorDesempenho ? "gold" : performancePlayer2 === segundoDesempenho ? "silver" : "bronze"}">
+            <div class="player-header">
+              <div class="player-title">${nome2}</div>
+              <div class="player-score">${performancePlayer2}</div>
+            </div>
+            <img src="${getTrofeu(2)}" class="trofeu-icon" />
+            <div class="player-medal">
+                ${performancePlayer2 === maiorDesempenho ? "🥇" : performancePlayer2 === segundoDesempenho && "🥈"}
+            </div>
+        </div>
+    </div>
+    
+    <button onclick="window.location.reload()" class="button">
+        Refazer teste
+    </button>
+</div>
     `
         : `
 
-     <div class="final-message">
-        <img src="../images/trofeu.png" class="trofeu-icon" />
+     <div class="final-message-onePlayer">
         <div class="feedback-message">
         ${message}
         </div>

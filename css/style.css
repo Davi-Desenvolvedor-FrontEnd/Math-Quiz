@@ -352,12 +352,12 @@ h3.select-game-mode {
   filter: brightness(0.8);
 }
 
-.final-message {
+.final-message-threePlayers {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
   padding: 2rem;
+  gap: 4px;
 
   .feedback-message {
     width: 100%;
@@ -386,56 +386,266 @@ h3.select-game-mode {
       flex-direction: column;
       align-items: center;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
       min-height: 380px;
       width: 33%;
 
-      
+      .player-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: center;
+      }
+
       &:hover {
         transform: translateY(-5px);
         box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
       }
-      
-      &.gold {
-        border: 4px solid #FFD700;
-        background: linear-gradient(135deg, #FFF8DC, #FFFAF0);
+
+      .gold {
+        border: 4px solid #ffd700;
+        background: linear-gradient(135deg, #fff8dc, #fffaf0);
       }
-      
-      &.silver {
-        border: 4px solid #C0C0C0;
-        background: linear-gradient(135deg, #F5F5F5, #FAFAFA);
+
+      .silver {
+        border: 4px solid #c0c0c0;
+        background: linear-gradient(135deg, #f5f5f5, #fafafa);
       }
-      
-      &.bronze {
-        border: 4px solid #CD7F32;
-        background: linear-gradient(135deg, #FDF5E6, #FFFAF0);
+
+      .bronze {
+        border: 4px solid #cd7f32;
+        background: linear-gradient(135deg, #fdf5e6, #fffaf0);
       }
-      
+
       .player-title {
         font-size: 1.2em;
         font-weight: bold;
         color: #1e40af;
         margin-bottom: 0.5rem;
       }
-      
+
       .player-score {
-        font-size: 3.5em;
+        font-size: 3em;
         font-weight: bold;
         color: #1411cb;
         margin: 0.5rem 0;
+
+        &::after {
+          content: "pts";
+          font-weight: 400;
+          color: #1411cb;
+          font-size: 1rem;
+        }
       }
-      
+
       .trofeu-icon {
         width: 100px;
         height: 100px;
         margin: 0.5rem 0;
         animation: pulse 2s infinite;
       }
-      
+
       .player-medal {
         font-size: 2.5em;
         margin-top: 0.5rem;
       }
+    }
+  }
+}
+
+.final-message-twoPlayers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 4px;
+
+  .feedback-message {
+    width: 100%;
+    padding: 20px 10px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .players-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    width: 900px;
+    margin: 1rem 0;
+
+    .player-box {
+      background: red;
+      border-radius: 20px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+      min-height: 380px;
+      width: 33%;
+
+      .player-header {
+        flex-direction: row;
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid black;
+        align-items: center;
+        padding: 4px 40px;
+        gap: 20px;
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+      }
+
+      .gold {
+        border: 4px solid #ffd700;
+        background: linear-gradient(135deg, #fff8dc, #fffaf0);
+      }
+
+      .silver {
+        border: 4px solid #c0c0c0;
+        background: linear-gradient(135deg, #f5f5f5, #fafafa);
+      }
+
+      .bronze {
+        border: 4px solid #cd7f32;
+        background: linear-gradient(135deg, #fdf5e6, #fffaf0);
+      }
+
+      .player-title {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #1e40af;
+        margin-bottom: 0.5rem;
+      }
+
+      .player-score {
+        font-size: 3em;
+        font-weight: bold;
+        color: #1411cb;
+        margin: 0.5rem 0;
+
+        &::after {
+          content: "pts";
+          font-weight: 400;
+          font-size: 1rem;
+          color: #1411cb;
+        }
+      }
+
+      .trofeu-icon {
+        width: 100px;
+        height: 100px;
+        margin: 0.5rem 0;
+        animation: pulse 2s infinite;
+      }
+
+      .player-medal {
+        font-size: 2.5em;
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}
+
+.final-message-onePlayer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .trofeu-icon {
+    width: 100px;
+    height: auto;
+    animation: fade-in 3s ease-in-out infinite alternate;
+  }
+
+  .score-circle {
+    background: conic-gradient(
+      from 0deg,
+      #1e40af 0%,
+      #3b82f6 var(--progress),
+      #e0e7ff var(--progress),
+      #e0e7ff 100%
+    );
+    border-radius: 50%;
+    padding: 8px;
+    width: 220px;
+    height: 220px;
+
+    .score-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      background-color: #fff;
+      border-radius: 50%;
+    }
+
+    .text-6xl {
+      font-size: 5em;
+      color: #1411cb;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .text-xl {
+      font-size: 2em;
+      color: #00b4d8;
+      line-height: 1;
+    }
+  }
+
+  .feedback-message {
+    width: 100%;
+    padding: 20px 10px;
+    border-radius: 12px;
+    color: #1411cb;
+    text-align: center;
+    font-size: 2em;
+  }
+  .statics-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    width: 100%;
+    margin-top: 20px;
+
+    .acertos-box,
+    .erros-box {
+      background-color: #ffffff33;
+      width: 200px;
+      height: 100px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+
+      > p {
+        font-size: 0.8em;
+      }
+    }
+    #correct-text,
+    #wrong-text {
+      font-weight: bold;
+      font-size: 1.8em;
     }
   }
 }
@@ -462,13 +672,12 @@ h3.select-game-mode {
   }
 }
 
-
 .podium-container {
   width: 500px;
   height: 500px;
   display: flex;
 
-  && > div {
+  > div {
     height: 100%;
     width: 33%;
     display: flex;
@@ -477,7 +686,7 @@ h3.select-game-mode {
     align-items: center;
     position: relative;
 
-    && .name-box {
+    .name-box {
       width: 150px;
       height: 150px;
       border-radius: 50%;
@@ -489,7 +698,7 @@ h3.select-game-mode {
       animation-fill-mode: both;
     }
 
-    && h4 {
+    h4 {
       font:
         500 2em/1.1 "Good Timing",
         "Arial";
@@ -498,64 +707,64 @@ h3.select-game-mode {
   }
 
   /* TERCEIRO LUGAR (aparece primeiro) */
-  && .third-place {
-    && .podium-box {
+  .third-place {
+    .podium-box {
       color: #a25124;
       height: 25%;
       animation: grow-height 0.8s ease-out; /* Pódio aparece primeiro */
       animation-fill-mode: both;
     }
 
-    && .name-box {
+    .name-box {
       animation:
         spotlight-on 0.5s ease 0.9s both,
         /* Luz acende após 0.9s */ spotlight-off 0.5s ease 2.4s both; /* Luz apaga após 2.4s */
     }
 
-    && h4 {
+    h4 {
       animation: name-appear 0.5s ease 1.4s both; /* Nome aparece após 1.4s */
     }
   }
 
   /* SEGUNDO LUGAR */
-  && .second-place {
-    && .podium-box {
+  .second-place {
+    .podium-box {
       color: #acacac;
       height: 45%;
       animation: grow-height 0.8s ease-out 0.2s both; /* Pódio aparece com 0.2s delay */
     }
 
-    && .name-box {
+    .name-box {
       animation:
         spotlight-on 0.5s ease 1.1s both,
         /* Luz acende após 1.1s */ spotlight-off 0.5s ease 2.6s both; /* Luz apaga após 2.6s */
     }
 
-    && h4 {
+    h4 {
       animation: name-appear 0.5s ease 1.6s both; /* Nome aparece após 1.6s */
     }
   }
 
   /* PRIMEIRO LUGAR (aparece por último) */
-  && .first-place {
-    && .podium-box {
+  .first-place {
+    .podium-box {
       color: #f1af33;
       height: 75%;
       animation: grow-height 0.8s ease-out 0.4s both; /* Pódio aparece com 0.4s delay */
     }
 
-    && .name-box {
+    .name-box {
       animation:
         spotlight-on 0.5s ease 1.3s both,
         /* Luz acende após 1.3s */ spotlight-off 0.5s ease 2.8s both; /* Luz apaga após 2.8s */
     }
 
-    && h4 {
+    h4 {
       animation: name-appear 0.5s ease 1.8s both; /* Nome aparece após 1.8s */
     }
   }
 
-  && .podium-box {
+  .podium-box {
     width: 100%;
     min-height: 100px;
     background: linear-gradient(45deg, #861a1b, #5c1112, #861a1b);
