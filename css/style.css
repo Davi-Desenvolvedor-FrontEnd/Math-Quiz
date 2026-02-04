@@ -9,12 +9,12 @@
 
 @font-face {
   font-family: "Good Timing"; /* Dê qualquer nome para a fonte */
-  src: url("font/good\ timing\ bd.otf") format("opentype");
+  src: url("/font/good\ timing\ bd.otf") format("opentype");
 }
 
 @font-face {
   font-family: "Xirod"; /* Dê qualquer nome para a fonte */
-  src: url("font/xirod.regular.otf") format("opentype");
+  src: url("/font/xirod.regular.otf") format("opentype");
 }
 
 * {
