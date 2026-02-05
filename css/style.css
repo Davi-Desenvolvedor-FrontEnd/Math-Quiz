@@ -54,7 +54,7 @@ body::before {
 }
 .container {
   background: linear-gradient(#0096c7, #00b4d8, #48cae4);
-  min-width: 50%;
+  width: 50%;
   min-height: 500px;
   max-height: 600px;
   border-radius: 8px;
